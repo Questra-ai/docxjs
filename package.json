@@ -29,6 +29,7 @@
     "@semantic-release/github": "^11.0.0",
     "@semantic-release/npm": "^12.0.0",
     "@semantic-release/release-notes-generator": "^14.0.0",
+    "@xmldom/xmldom": "^0.9.10",
     "diff": "^8.0.2",
     "jasmine-core": "^5.1.0",
     "karma": "^6.3.9",
@@ -38,7 +39,8 @@
     "rollup": "^4.9.1",
     "semantic-release": "^24.2.0",
     "tslib": "^2.4.0",
-    "typescript": "^5.0.3"
+    "typescript": "^5.0.3",
+    "tsx": "^4.19.0"
   },
   "scripts": {
     "build": "rollup --config rollup.config.mjs",
@@ -48,7 +50,8 @@
     "e2e": "karma start karma.conf.cjs --single-run",
     "e2e-watch": "karma start karma.conf.cjs",
     "prepublishOnly": "pnpm run build-prod",
-    "release": "semantic-release"
+    "release": "semantic-release",
+    "test:unit": "tsx tests/unit/table-style-classes.ts"
   },
   "files": [
     "dist",

@@ -1665,11 +1665,11 @@
                     break;
                 case "band1Horz":
                     modificator = ":not(.no-hband)";
-                    selector = "tr.odd-row";
+                    selector = "tr.odd-row td";
                     break;
                 case "band2Horz":
                     modificator = ":not(.no-hband)";
-                    selector = "tr.even-row";
+                    selector = "tr.even-row td";
                     break;
                 default: return [];
             }
@@ -3094,6 +3094,7 @@
             }
         }
         processTable(table) {
+            this.applyTableStyleConditionalClasses(table);
             for (var r of table.children) {
                 for (var c of r.children) {
                     c.cssStyle = this.copyStyleProperties(table.cellStyle, c.cssStyle, [
@@ -3101,6 +3102,85 @@
                         "padding-left", "padding-right", "padding-top", "padding-bottom"
                     ]);
                     this.processElement(c);
+                }
+            }
+        }
+        applyTableStyleConditionalClasses(table) {
+            const rows = (table.children ?? []).filter(r => r.type === DomType.Row);
+            if (rows.length === 0)
+                return;
+            const lookTokens = (table.className ?? "").split(/\s+/).filter(Boolean);
+            if (lookTokens.length === 0)
+                return;
+            const look = new Set(lookTokens);
+            const hasFirstRow = look.has("first-row");
+            const hasLastRow = look.has("last-row");
+            const hasFirstCol = look.has("first-col");
+            const hasLastCol = look.has("last-col");
+            const hBand = !look.has("no-hband");
+            const vBand = !look.has("no-vband");
+            if (!hasFirstRow && !hasLastRow && !hasFirstCol && !hasLastCol && !hBand && !vBand)
+                return;
+            const rowBandSize = Math.max(1, table.rowBandSize ?? 1);
+            const colBandSize = Math.max(1, table.colBandSize ?? 1);
+            let colCount = table.columns?.length ?? 0;
+            if (!colCount) {
+                for (const row of rows) {
+                    let cols = 0;
+                    for (const cell of row.children ?? []) {
+                        if (cell.type === DomType.Cell)
+                            cols += cell.span || 1;
+                    }
+                    colCount = Math.max(colCount, cols);
+                }
+            }
+            let bandableRow = 0;
+            for (let ri = 0; ri < rows.length; ri++) {
+                const row = rows[ri];
+                const isFirst = ri === 0 && hasFirstRow;
+                const isLast = ri === rows.length - 1 && hasLastRow;
+                if (!row.className) {
+                    const rowClasses = [];
+                    if (isFirst)
+                        rowClasses.push("first-row");
+                    if (isLast)
+                        rowClasses.push("last-row");
+                    if (hBand && !isFirst && !isLast) {
+                        const band = Math.floor(bandableRow / rowBandSize) % 2;
+                        rowClasses.push(band === 0 ? "odd-row" : "even-row");
+                        bandableRow++;
+                    }
+                    if (rowClasses.length)
+                        row.className = rowClasses.join(" ");
+                }
+                else if (hBand && !isFirst && !isLast) {
+                    bandableRow++;
+                }
+                let col = 0;
+                for (const child of row.children ?? []) {
+                    if (child.type !== DomType.Cell)
+                        continue;
+                    const cell = child;
+                    const span = cell.span || 1;
+                    if (!cell.className) {
+                        const cellClasses = [];
+                        const isFirstC = hasFirstCol && col === 0;
+                        const isLastC = hasLastCol && col + span >= colCount;
+                        if (isFirstC)
+                            cellClasses.push("first-col");
+                        if (isLastC)
+                            cellClasses.push("last-col");
+                        if (vBand && !isFirstC && !isLastC) {
+                            const offset = hasFirstCol ? col - 1 : col;
+                            if (offset >= 0) {
+                                const band = Math.floor(offset / colBandSize) % 2;
+                                cellClasses.push(band === 0 ? "odd-col" : "even-col");
+                            }
+                        }
+                        if (cellClasses.length)
+                            cell.className = cellClasses.join(" ");
+                    }
+                    col += span;
                 }
             }
         }

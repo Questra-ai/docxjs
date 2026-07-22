@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>docx-preview table background verify</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 1rem; }
+      #meta { margin-bottom: 1rem; font-size: 14px; }
+      #root { border: 1px solid #ccc; }
+    </style>
+  </head>
+  <body>
+    <p>Open a .docx with table-style header/band fills to verify backgrounds.</p>
+    <input id="file" type="file" accept=".docx" />
+    <div id="meta"></div>
+    <div id="root"></div>
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+    <script src="../dist/docx-preview.js"></script>
+    <script>
+      document.getElementById('file').addEventListener('change', async (e) => {
+        const meta = document.getElementById('meta')
+        const root = document.getElementById('root')
+        root.innerHTML = ''
+        meta.textContent = 'Loading…'
+        try {
+          const file = e.target.files?.[0]
+          if (!file) return
+          await docx.renderAsync(file, root, null, { inWrapper: true, className: 'docx' })
+          const first = root.querySelector('tr.first-row td')
+          const odd = root.querySelector('tr.odd-row td')
+          const csFirst = first ? getComputedStyle(first).backgroundColor : 'n/a'
+          const csOdd = odd ? getComputedStyle(odd).backgroundColor : 'n/a'
+          meta.textContent = `tr.first-row bg=${csFirst}; tr.odd-row td bg=${csOdd}; rows with first-row=${root.querySelectorAll('tr.first-row').length}, odd-row=${root.querySelectorAll('tr.odd-row').length}`
+        } catch (err) {
+          meta.textContent = String(err)
+          console.error(err)
+        }
+      })
+    </script>
+  </body>
+</html>

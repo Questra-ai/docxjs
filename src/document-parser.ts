@@ -325,11 +325,12 @@ export class DocumentParser {
 				break;
 			case "band1Horz":
 				modificator = ":not(.no-hband)";
-				selector = "tr.odd-row";
+				// Target cells so background-color fills the cell (tr backgrounds are unreliable).
+				selector = "tr.odd-row td";
 				break;
 			case "band2Horz":
 				modificator = ":not(.no-hband)";
-				selector = "tr.even-row";
+				selector = "tr.even-row td";
 				break;
 			default: return [];
 		}

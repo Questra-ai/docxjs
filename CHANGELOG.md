@@ -20,7 +20,7 @@
 * added rendering of vml:oval and vml:rect ([98b14f1](https://github.com/Questra-ai/docxjs/commit/98b14f10cadc585d8fb30b0b0ebd47a1998f78d9))
 * implemented basic math parsing ([fb05735](https://github.com/Questra-ai/docxjs/commit/fb05735edcaaad463bbfc7f4f0ccfeb4efb67a82))
 * publish as @questra-ai/docx-preview ([260b8cf](https://github.com/Questra-ai/docxjs/commit/260b8cfa6be312716b1636bd02c3e1117ef8e9cc))
-* publish as @questra/docx-preview with safer defaults ([b8b76e2](https://github.com/Questra-ai/docxjs/commit/b8b76e2f98f82ace47216d1cf42a634263f98cf4))
+* publish as @questra-ai/docx-preview with safer defaults ([b8b76e2](https://github.com/Questra-ai/docxjs/commit/b8b76e2f98f82ace47216d1cf42a634263f98cf4))
 
 # 1.0.0 (2026-07-22)
 
@@ -43,7 +43,7 @@
 * add basic ins/del parsing ([bf51a7c](https://github.com/Questra-ai/docxjs/commit/bf51a7cffb2e6af9eba595911a4e8b94beda4305))
 * added rendering of vml:oval and vml:rect ([98b14f1](https://github.com/Questra-ai/docxjs/commit/98b14f10cadc585d8fb30b0b0ebd47a1998f78d9))
 * implemented basic math parsing ([fb05735](https://github.com/Questra-ai/docxjs/commit/fb05735edcaaad463bbfc7f4f0ccfeb4efb67a82))
-* publish as @questra/docx-preview with safer defaults ([b8b76e2](https://github.com/Questra-ai/docxjs/commit/b8b76e2f98f82ace47216d1cf42a634263f98cf4))
+* publish as @questra-ai/docx-preview with safer defaults ([b8b76e2](https://github.com/Questra-ai/docxjs/commit/b8b76e2f98f82ace47216d1cf42a634263f98cf4))
 
 # 1.0.0 (2026-07-22)
 
@@ -66,7 +66,7 @@
 * add basic ins/del parsing ([bf51a7c](https://github.com/Questra-ai/docxjs/commit/bf51a7cffb2e6af9eba595911a4e8b94beda4305))
 * added rendering of vml:oval and vml:rect ([98b14f1](https://github.com/Questra-ai/docxjs/commit/98b14f10cadc585d8fb30b0b0ebd47a1998f78d9))
 * implemented basic math parsing ([fb05735](https://github.com/Questra-ai/docxjs/commit/fb05735edcaaad463bbfc7f4f0ccfeb4efb67a82))
-* publish as @questra/docx-preview with safer defaults ([b8b76e2](https://github.com/Questra-ai/docxjs/commit/b8b76e2f98f82ace47216d1cf42a634263f98cf4))
+* publish as @questra-ai/docx-preview with safer defaults ([b8b76e2](https://github.com/Questra-ai/docxjs/commit/b8b76e2f98f82ace47216d1cf42a634263f98cf4))
 
 # 1.0.0 (2026-07-22)
 
@@ -89,4 +89,4 @@
 * add basic ins/del parsing ([bf51a7c](https://github.com/Questra-ai/docxjs/commit/bf51a7cffb2e6af9eba595911a4e8b94beda4305))
 * added rendering of vml:oval and vml:rect ([98b14f1](https://github.com/Questra-ai/docxjs/commit/98b14f10cadc585d8fb30b0b0ebd47a1998f78d9))
 * implemented basic math parsing ([fb05735](https://github.com/Questra-ai/docxjs/commit/fb05735edcaaad463bbfc7f4f0ccfeb4efb67a82))
-* publish as @questra/docx-preview with safer defaults ([b8b76e2](https://github.com/Questra-ai/docxjs/commit/b8b76e2f98f82ace47216d1cf42a634263f98cf4))
+* publish as @questra-ai/docx-preview with safer defaults ([b8b76e2](https://github.com/Questra-ai/docxjs/commit/b8b76e2f98f82ace47216d1cf42a634263f98cf4))
