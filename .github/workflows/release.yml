@@ -31,14 +31,15 @@ jobs:
         with:
           node-version: 22
           registry-url: https://npm.pkg.github.com
-          scope: '@questra'
+          scope: '@questra-ai'
           always-auth: true
 
       - name: Install
         run: pnpm install --no-frozen-lockfile
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.QUESTRA_PACKAGES_TOKEN || secrets.GITHUB_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.QUESTRA_PACKAGES_TOKEN || secrets.GITHUB_TOKEN }}
+          # Same-org package (@questra-ai/* under Questra-ai) — GITHUB_TOKEN is enough.
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check types
         run: pnpm check-types
@@ -54,6 +55,6 @@ jobs:
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.QUESTRA_PACKAGES_TOKEN || secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.QUESTRA_PACKAGES_TOKEN || secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm exec semantic-release

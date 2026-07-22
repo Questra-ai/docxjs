@@ -1,5 +1,5 @@
 {
-  "name": "@questra/docx-preview",
+  "name": "@questra-ai/docx-preview",
   "version": "1.0.0",
   "description": "DOCX → HTML preview renderer (maintained fork of VolodymyrBaydalka/docxjs).",
   "license": "Apache-2.0",
