@@ -45,6 +45,30 @@
     function escapeClassName(className) {
         return className?.replace(/[ .]+/g, '-').replace(/[&]+/g, 'and').toLowerCase();
     }
+    function sanitizeHref(href) {
+        if (!href)
+            return '';
+        const trimmed = href.trim();
+        if (!trimmed)
+            return '';
+        if (trimmed.startsWith('#'))
+            return trimmed;
+        const lower = trimmed.toLowerCase();
+        if (lower.startsWith('javascript:') ||
+            lower.startsWith('vbscript:') ||
+            lower.startsWith('data:')) {
+            return '';
+        }
+        const schemeMatch = /^([a-z][a-z0-9+.-]*):/i.exec(trimmed);
+        if (schemeMatch) {
+            const scheme = schemeMatch[1].toLowerCase();
+            if (scheme === 'http' || scheme === 'https' || scheme === 'mailto') {
+                return trimmed;
+            }
+            return '';
+        }
+        return trimmed;
+    }
     function encloseFontFamily(fontFamily) {
         return /^[^"'].*\s.*[^"']$/.test(fontFamily) ? `'${fontFamily}'` : fontFamily;
     }
@@ -3535,14 +3559,15 @@ section.${c}>footer { z-index: 1; }
         }
         renderHyperlink(elem) {
             const res = this.toH(elem, ns.html, "a");
-            res.href = '';
+            let href = '';
             if (elem.id) {
                 const rel = this.document.documentPart.rels.find(it => it.id == elem.id && it.targetMode === "External");
-                res.href = rel?.target ?? res.href;
+                href = rel?.target ?? href;
             }
             if (elem.anchor) {
-                res.href += `#${elem.anchor}`;
+                href += `#${elem.anchor}`;
             }
+            res.href = sanitizeHref(href);
             return this.h(res);
         }
         renderSmartTag(elem) {
@@ -3974,7 +3999,7 @@ section.${c}>footer { z-index: 1; }
         useBase64URL: false,
         renderChanges: false,
         renderComments: false,
-        renderAltChunks: true,
+        renderAltChunks: false,
         h: h
     };
     function parseAsync(data, userOptions) {

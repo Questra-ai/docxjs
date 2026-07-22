@@ -2,6 +2,36 @@ export function escapeClassName(className: string) {
 	return className?.replace(/[ .]+/g, '-').replace(/[&]+/g, 'and').toLowerCase();
 }
 
+/** Allow only safe URL schemes for hyperlinks rendered into the host page. */
+export function sanitizeHref(href: string): string {
+	if (!href) return '';
+
+	const trimmed = href.trim();
+	if (!trimmed) return '';
+	if (trimmed.startsWith('#')) return trimmed;
+
+	const lower = trimmed.toLowerCase();
+	if (
+		lower.startsWith('javascript:') ||
+		lower.startsWith('vbscript:') ||
+		lower.startsWith('data:')
+	) {
+		return '';
+	}
+
+	const schemeMatch = /^([a-z][a-z0-9+.-]*):/i.exec(trimmed);
+	if (schemeMatch) {
+		const scheme = schemeMatch[1]!.toLowerCase();
+		if (scheme === 'http' || scheme === 'https' || scheme === 'mailto') {
+			return trimmed;
+		}
+		return '';
+	}
+
+	// Scheme-relative or path-relative URLs.
+	return trimmed;
+}
+
 export function encloseFontFamily(fontFamily: string): string {
     return /^[^"'].*\s.*[^"']$/.test(fontFamily) ? `'${fontFamily}'` : fontFamily;
 }

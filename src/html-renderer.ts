@@ -10,7 +10,7 @@ import {
 import { Options } from './docx-preview';
 import { DocumentElement } from './document/document';
 import { WmlParagraph } from './document/paragraph';
-import { asArray, encloseFontFamily, escapeClassName, isString, keyBy, mergeDeep } from './utils';
+import { asArray, encloseFontFamily, escapeClassName, isString, keyBy, mergeDeep, sanitizeHref } from './utils';
 import { computePixelToPoint, updateTabStop } from './javascript';
 import { FontTablePart } from './font-table/font-table';
 import { FooterHeaderReference, SectionProperties } from './document/section';
@@ -926,17 +926,18 @@ section.${c}>footer { z-index: 1; }
 
 	renderHyperlink(elem: WmlHyperlink) {
 		const res = this.toH(elem, ns.html, "a");
-		res.href = '';
+		let href = '';
 
 		if (elem.id) {
 			const rel = this.document.documentPart.rels.find(it => it.id == elem.id && it.targetMode === "External");
-			res.href = rel?.target ?? res.href;
+			href = rel?.target ?? href;
 		}
 
 		if (elem.anchor) {
-			res.href += `#${elem.anchor}`;
+			href += `#${elem.anchor}`;
 		}
 
+		res.href = sanitizeHref(href);
 		return this.h(res);
 	}
 	

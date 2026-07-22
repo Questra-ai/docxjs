@@ -1,43 +1,59 @@
 {
-  "name": "docx-preview",
-  "version": "0.4.0",
+  "name": "@questra/docx-preview",
+  "version": "0.1.0",
+  "description": "DOCX → HTML preview renderer (maintained fork of VolodymyrBaydalka/docxjs).",
   "license": "Apache-2.0",
+  "type": "module",
+  "packageManager": "pnpm@11.11.0",
   "keywords": [
     "word",
-    "docx"
+    "docx",
+    "preview"
   ],
   "author": {
     "name": "Volodymyr Baydalka"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/VolodymyrBaydalka/docxjs.git"
+    "url": "https://github.com/Questra-ai/docxjs.git"
   },
   "dependencies": {
-    "jszip": ">=3.0.0"
+    "jszip": "3.10.1"
   },
   "devDependencies": {
-    "rollup": "^4.9.1",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.4",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^11.0.0",
+    "@semantic-release/npm": "^12.0.0",
+    "@semantic-release/release-notes-generator": "^14.0.0",
     "diff": "^8.0.2",
     "jasmine-core": "^5.1.0",
     "karma": "^6.3.9",
     "karma-chrome-launcher": "^3.1.0",
     "karma-firefox-launcher": "^2.1.2",
     "karma-jasmine": "^5.0.0",
+    "rollup": "^4.9.1",
+    "semantic-release": "^24.2.0",
     "tslib": "^2.4.0",
     "typescript": "^5.0.3"
   },
   "scripts": {
     "build": "rollup --config rollup.config.mjs",
     "build-prod": "rollup --config rollup.config.mjs --environment BUILD:production",
+    "check-types": "tsc --noEmit",
     "watch": "rollup --config rollup.config.mjs --watch",
     "e2e": "karma start karma.conf.cjs --single-run",
-    "e2e-watch": "karma start karma.conf.cjs"
+    "e2e-watch": "karma start karma.conf.cjs",
+    "prepublishOnly": "pnpm run build-prod",
+    "release": "semantic-release"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "exports": {
     ".": {
@@ -46,5 +62,11 @@
       "types": "./dist/docx-preview.d.ts"
     }
   },
-  "types": "dist/docx-preview.d.ts"
+  "types": "dist/docx-preview.d.ts",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "engines": {
+    "node": ">=22"
+  }
 }

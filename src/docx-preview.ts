@@ -45,7 +45,8 @@ export const defaultOptions: Options = {
 	useBase64URL: false,
 	renderChanges: false,
     renderComments: false,
-    renderAltChunks: true,
+    // Disabled by default: altChunks render into iframe.srcdoc with document HTML.
+    renderAltChunks: false,
     h: h
 };
 

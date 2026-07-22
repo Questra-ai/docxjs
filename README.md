@@ -1,10 +1,17 @@
-[![npm version](https://badge.fury.io/js/docx-preview.svg)](https://www.npmjs.com/package/docx-preview)
-[![Support Ukraine](https://img.shields.io/badge/Support-Ukraine-blue?style=flat&logo=adguard)](https://war.ukraine.ua/)
+# @questra/docx-preview
 
-# docxjs
-Docx rendering library
+Maintained Questra fork of [VolodymyrBaydalka/docxjs](https://github.com/VolodymyrBaydalka/docxjs) (`docx-preview`). Published to private GitHub Packages as `@questra/docx-preview`.
 
-Demo - https://volodymyrbaydalka.github.io/docxjs/
+Upstream demo: https://volodymyrbaydalka.github.io/docxjs/
+
+## Questra changes
+
+- Package scoped as `@questra/docx-preview` with semantic-release to GitHub Packages
+- `jszip` pinned to `3.10.1`
+- `renderAltChunks` defaults to `false` (avoids `iframe.srcdoc` with document HTML)
+- External hyperlink `href` values are scheme-allowlisted (`http`, `https`, `mailto`, fragment/relative)
+
+Consumers should still sanitize rendered HTML (e.g. DOMPurify) before trusting it in a privileged origin.
 
 Goal
 ----
@@ -14,8 +21,10 @@ That means library is limited by HTML capabilities (for example Google Docs rend
 Installation
 -----
 ```
-npm install docx-preview
+pnpm add @questra/docx-preview
 ```
+
+Requires `@questra` registry auth — see workspace `docs/github-packages.md`.
 
 Usage
 -----
@@ -61,7 +70,7 @@ renderAsync(
         renderFootnotes: true, //enables footnotes rendering
         renderEndnotes: true, //enables endnotes rendering
         renderComments: false, //enables experimental comments rendering
-        renderAltChunks: true, //enables altChunks (html parts) rendering
+        renderAltChunks: false, //enables altChunks (html parts) rendering — off by default (srcdoc XSS risk)
         debug: boolean = false, //enables additional logging
         h: ({ ns, tagName, className, style, children, ...props } | Node | string): Node, //experimental hook for HTML rendering, default implementation - defaultOptions.h
     }): Promise<WordDocument>
